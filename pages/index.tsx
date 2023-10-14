@@ -3,6 +3,7 @@ import prisma from '../lib/prisma';
 import { GetStaticProps } from 'next';
 import { Prisma } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
+import Head from 'next/head';
 
 export const getStaticProps: GetStaticProps = async () => {
   const users = await prisma.user.findMany();
@@ -19,6 +20,9 @@ export default function Page({
 }) {
   return (
     <div>
+      <Head>
+        <title>Fulbapp</title>
+      </Head>
       <h1>Hello, Next.js!</h1>
       <Button variant='contained'>Hello world</Button>
     </div>
