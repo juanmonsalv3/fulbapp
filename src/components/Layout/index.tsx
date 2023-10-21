@@ -23,8 +23,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <CssBaseline />
         <Box sx={{ pb: 7 }}>
           <MenuAppBar>{children}</MenuAppBar>
-
-          {/* <BottomNav /> */}
         </Box>
       </main>
     </ThemeProvider>
