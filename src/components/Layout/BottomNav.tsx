@@ -1,8 +1,6 @@
 import React from 'react';
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { NAV_PAGES } from '../../../constants/pages';
 
 function BottomNav() {
   const [value, setValue] = React.useState(0);
@@ -18,9 +16,13 @@ function BottomNav() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label='Recents' icon={<RestoreIcon />} />
-        <BottomNavigationAction label='Favorites' icon={<FavoriteIcon />} />
-        <BottomNavigationAction label='Nearby' icon={<LocationOnIcon />} />
+        {NAV_PAGES.map((page) => (
+          <BottomNavigationAction
+            key={page.pageUrl}
+            label={page.label}
+            icon={<page.Icon />}
+          />
+        ))}
       </BottomNavigation>
     </Paper>
   );
