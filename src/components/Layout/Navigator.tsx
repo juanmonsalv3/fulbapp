@@ -1,72 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import {
   Divider,
-  Drawer,
   List,
   ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
-  Theme,
+  Toolbar,
 } from '@mui/material';
 
-import PeopleIcon from '@mui/icons-material/People';
-import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-import PermMediaOutlinedIcon from '@mui/icons-material/PermMediaOutlined';
-import PublicIcon from '@mui/icons-material/Public';
-import HomeIcon from '@mui/icons-material/Home';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
-const categories = [
-  {
-    id: 'Develop',
-    children: [
-      { id: 'Authentication', icon: <PeopleIcon />, active: true },
-      { id: 'Database', icon: <DnsRoundedIcon /> },
-      { id: 'Storage', icon: <PermMediaOutlinedIcon /> },
-      { id: 'Hosting', icon: <PublicIcon /> },
-    ],
-  },
-  {
-    id: 'Quality',
-    children: [
-      { id: 'Analytics', icon: <PeopleIcon /> },
-      { id: 'Performance', icon: <PeopleIcon /> },
-      { id: 'Test Lab', icon: <PeopleIcon /> },
-    ],
-  },
-];
-
-function Navigator(props: any) {
-  const { ...other } = props;
-
+function Navigator() {
   return (
-    <Drawer variant='permanent' {...other}>
-      <List disablePadding>
-        <ListItem>Paperbase</ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText>Project Overview</ListItemText>
-        </ListItem>
-        {categories.map(({ id, children }) => (
-          <React.Fragment key={id}>
-            <ListItem>
-              <ListItemText>{id}</ListItemText>
-            </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
-              <ListItem key={childId}>
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText>{childId}</ListItemText>
-              </ListItem>
-            ))}
-
-            <Divider/>
-          </React.Fragment>
+    <div>
+      <Toolbar />
+      <Divider />
+      <List>
+        {['Estadísticas', 'Partidos', 'Jugadores', 'Canchas'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
         ))}
       </List>
-    </Drawer>
+    </div>
   );
 }
 

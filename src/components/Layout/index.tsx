@@ -1,34 +1,32 @@
-import { Box, CssBaseline, Hidden, createTheme } from '@mui/material';
+import {
+  Box,
+  CssBaseline,
+  Hidden,
+  ThemeProvider,
+  createTheme,
+} from '@mui/material';
 import { useState } from 'react';
-import Navigator from './Navigator';
+import MenuAppBar from './MenuAppBar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = createTheme({});
+
+  const [mobileOpen, setMobileOpen] = useState(true);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   return (
-    <main>
-      <CssBaseline />
-      <nav>
-        <Hidden smUp implementation='js'>
-          <Navigator
-            variant='temporary'
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-          />
-        </Hidden>
-        <Hidden xsDown implementation='css'>
-          <Navigator />
-        </Hidden>
-      </nav>
-      <Box sx={{ pb: 7 }}>
-        {/* <MenuAppBar /> */}
-        {children}
-        {/* <BottomNav /> */}
-      </Box>
-    </main>
+    <ThemeProvider theme={theme}>
+      <main>
+        <CssBaseline />
+        <Box sx={{ pb: 7 }}>
+          <MenuAppBar>{children}</MenuAppBar>
+
+          {/* <BottomNav /> */}
+        </Box>
+      </main>
+    </ThemeProvider>
   );
 }
