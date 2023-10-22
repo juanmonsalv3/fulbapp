@@ -11,7 +11,10 @@ import Navigator from './Navigator';
 const drawerWidth = 240;
 const calcWidth = `calc(100% - ${drawerWidth}px)`;
 
-export default function MenuAppBar({ children }: PropsWithChildren) {
+export default function MenuAppBar({
+  children,
+  title = 'Fulbo Medallo',
+}: PropsWithChildren<{ title?: string }>) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const theme = useTheme();
@@ -40,7 +43,7 @@ export default function MenuAppBar({ children }: PropsWithChildren) {
             <MenuIcon />
           </IconButton>
           <Typography variant='h6' noWrap component='div' flexGrow={1}>
-            Responsive drawer
+            {title}
           </Typography>
           <AuthMenu />
         </Toolbar>

@@ -1,28 +1,19 @@
-import {
-  Box,
-  CssBaseline,
-  Hidden,
-  ThemeProvider,
-  createTheme,
-} from '@mui/material';
-import { useState } from 'react';
+import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import MenuAppBar from './MenuAppBar';
+import { PropsWithChildren } from 'react';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+  children,
+  pageProps,
+}: PropsWithChildren<{ pageProps: any }>) {
   const theme = createTheme({});
-
-  const [mobileOpen, setMobileOpen] = useState(true);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   return (
     <ThemeProvider theme={theme}>
       <main>
         <CssBaseline />
         <Box sx={{ pb: 7 }}>
-          <MenuAppBar>{children}</MenuAppBar>
+          <MenuAppBar title={pageProps.title}>{children}</MenuAppBar>
         </Box>
       </main>
     </ThemeProvider>

@@ -6,17 +6,17 @@ import { DefaultArgs } from '@prisma/client/runtime/library';
 import Head from 'next/head';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const users = await prisma.user.findMany();
+  const fields = await prisma.field.findMany();
   return {
-    props: { users },
+    props: { fields, title: 'Fulbo Medallo' },
     revalidate: 10,
   };
 };
 
 export default function Page({
-  users,
+  fields,
 }: {
-  users: Prisma.UserDelegate<DefaultArgs>;
+  fields: Prisma.FieldDelegate<DefaultArgs>;
 }) {
   return (
     <div>

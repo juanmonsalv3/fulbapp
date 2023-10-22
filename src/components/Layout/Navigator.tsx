@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   Divider,
   List,
@@ -8,8 +9,21 @@ import {
   Toolbar,
 } from '@mui/material';
 
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import Insights from '@mui/icons-material/Insights';
+import Scoreboard from '@mui/icons-material/Scoreboard';
+import GroupIcon from '@mui/icons-material/Group';
+import StadiumIcon from '@mui/icons-material/Stadium';
+
+function Item({ label, icon }: { label: string; icon: ReactNode }) {
+  return (
+    <ListItem key={label} disablePadding>
+      <ListItemButton>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={label} />
+      </ListItemButton>
+    </ListItem>
+  );
+}
 
 function Navigator() {
   return (
@@ -17,16 +31,10 @@ function Navigator() {
       <Toolbar />
       <Divider />
       <List>
-        {['Estadísticas', 'Partidos', 'Jugadores', 'Canchas'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <Item label='Estadísticas' icon={<Insights />} />
+        <Item label='Partidos' icon={<Scoreboard />} />
+        <Item label='Jugadores' icon={<GroupIcon />} />
+        <Item label='Canchas' icon={<StadiumIcon />} />
       </List>
     </div>
   );

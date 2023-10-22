@@ -12,7 +12,7 @@ import Layout from '@/components/Layout';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-      <Layout>
+      <Layout pageProps={pageProps}>
         <Component {...pageProps} />
         <Toaster position='top-center' />
       </Layout>
