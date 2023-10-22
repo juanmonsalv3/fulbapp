@@ -77,7 +77,6 @@ export default function MenuAppBar({
         sx={{
           flexGrow: 1,
           p: 3,
-          width: { md: calcWidth },
         }}
       >
         <Toolbar />

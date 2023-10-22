@@ -1,16 +1,34 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import { Button } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Paper,
+  Typography,
+} from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Prisma } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import prisma from '../../lib/prisma';
-import Drawer from '@/components/common/Drawer';
+
+async function getFields() {
+  const fields = await prisma.field.findMany();
+  return fields;
+}
 
 export const getStaticProps: GetStaticProps = async () => {
-  const fields = await prisma.field.findMany();
+  const fields = await getFields();
   return {
-    props: { fields },
+    props: { fields, title: 'Fulbo Medallo' },
     revalidate: 10,
   };
 };
@@ -18,23 +36,62 @@ export const getStaticProps: GetStaticProps = async () => {
 export default function Page({
   fields,
 }: {
-  fields: Prisma.FieldDelegate<DefaultArgs>;
+  fields: Awaited<ReturnType<typeof getFields>>;
 }) {
-  console.log(fields);
-  const [open, setOpen] = useState(true);
+  const menuAnchor = useRef(null);
+  const [open, setOpen] = useState(false);
   return (
     <div>
       <Head>
         <title>Fulbapp</title>
       </Head>
-      <h1>Hello, Next.js!</h1>
-      <Button variant='contained' onClick={() => setOpen(true)}>
-        Nuevo
-      </Button>
 
-      <Drawer open={open} onClose={() => setOpen(false)}>
-        Drawer content
-      </Drawer>
+      <Paper elevation={3} sx={{ width: '100%' }}>
+        <Card>
+          <CardHeader
+            action={
+              <IconButton
+                aria-label='settings'
+                onClick={() => setOpen(true)}
+                ref={menuAnchor}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title='Lista de canchas'
+          />
+          <Menu
+            id='basic-menu'
+            anchorEl={menuAnchor.current}
+            open={open}
+            onClose={() => setOpen(false)}
+          >
+            <MenuItem>Nuevo</MenuItem>
+          </Menu>
+          <CardContent>
+            <List>
+              {fields.map((field) => (
+                <div key={field.id}>
+                  <ListItem
+                    alignItems='flex-start'
+                    secondaryAction={
+                      <IconButton edge='end' aria-label='comments'>
+                        <MoreVertIcon />
+                      </IconButton>
+                    }
+                  >
+                    <ListItemText
+                      primary={field.name}
+                      secondary={`Capacidad: ${field.capacity} jugadores.`}
+                    />
+                  </ListItem>
+                  <Divider component='li' />
+                </div>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      </Paper>
     </div>
   );
 }
