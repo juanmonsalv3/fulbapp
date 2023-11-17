@@ -65,3 +65,10 @@ model Field {
   prices     String   @default("") @db.Text
   active     Boolean  @default(true)
 }
+
+model Player {
+  id       String  @id @default(cuid())
+  name     String
+  nickname String
+  guest    Boolean @default(false)
+}

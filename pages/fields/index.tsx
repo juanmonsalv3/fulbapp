@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import {
@@ -13,12 +13,10 @@ import {
   Menu,
   MenuItem,
   Paper,
-  Typography,
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Prisma } from '@prisma/client';
-import { DefaultArgs } from '@prisma/client/runtime/library';
 import prisma from '../../lib/prisma';
+import EditDeleteList from '@/components/common/EditDeleteList';
 
 async function getFields() {
   const fields = await prisma.field.findMany();
@@ -69,26 +67,16 @@ export default function Page({
             <MenuItem>Nuevo</MenuItem>
           </Menu>
           <CardContent>
-            <List>
-              {fields.map((field) => (
-                <div key={field.id}>
-                  <ListItem
-                    alignItems='flex-start'
-                    secondaryAction={
-                      <IconButton edge='end' aria-label='comments'>
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
-                  >
-                    <ListItemText
-                      primary={field.name}
-                      secondary={`Capacidad: ${field.capacity} jugadores.`}
-                    />
-                  </ListItem>
-                  <Divider component='li' />
-                </div>
-              ))}
-            </List>
+            <EditDeleteList
+              title='Canchas'
+              items={fields.map((field) => ({
+                _id: field.id,
+                primaryText: field.name,
+                secondaryText: `Capacidad: ${field.capacity}`,
+              }))}
+              onEditClick={console.log}
+              onDeleteClick={console.log}
+            />
           </CardContent>
         </Card>
       </Paper>
